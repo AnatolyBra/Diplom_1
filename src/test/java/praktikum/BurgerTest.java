@@ -8,19 +8,22 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
 
     private Burger burger;
     @Mock
     private Bun bun;
+    @Mock
     private Ingredient ingredient;
+    @Mock
+    private Ingredient nextIngredient;
 
     @Before
     public void setUp() {
         burger = new Burger();
         burger.setBuns(bun);
-        ingredient = new Ingredient(IngredientType.SAUCE, "apple", 10F);
         burger.addIngredient(ingredient);
     }
 
@@ -31,7 +34,7 @@ public class BurgerTest {
 
     @Test
     public void setBuns() {
-        Mockito.when(burger.bun.getName()).thenReturn("булочка");
+        Mockito.when(bun.getName()).thenReturn("булочка");
         assertEquals("булочка", burger.bun.getName());
     }
 
@@ -42,7 +45,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void addIngredientNegative() {
+    public void listIngredientsIsEmpty() {
         burger.ingredients.remove(0);
         assertTrue("Коллекция не пустая", burger.ingredients.isEmpty());
     }
@@ -66,19 +69,21 @@ public class BurgerTest {
 
     @Test
     public void getReceipt() {
-        Mockito.when(burger.bun.getName()).thenReturn("булочка");
+        Mockito.when(bun.getName()).thenReturn("булочка");
 
         StringBuilder receipt = new StringBuilder(String.format("(==== %s ====)%n", burger.bun.getName()));
 
         for (Ingredient ingredient : burger.ingredients) {
+            Mockito.when(ingredient.getName()).thenReturn("apple");
+            Mockito.when(ingredient.getType()).thenReturn(IngredientType.SAUCE);
             receipt.append(String.format("= %s %s =%n", ingredient.getType().toString().toLowerCase(),
                     ingredient.getName()));
         }
 
         receipt.append(String.format("(==== %s ====)%n", burger.bun.getName()));
-        Mockito.when(burger.bun.getPrice()).thenReturn(50F);
+        Mockito.when(bun.getPrice()).thenReturn(50F);
         receipt.append(String.format("%nPrice: %f%n", burger.getPrice()));
 
-        assertEquals(burger.getReceipt(), receipt.toString());
+        assertEquals(receipt.toString(), burger.getReceipt());
     }
 }

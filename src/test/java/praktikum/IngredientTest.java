@@ -3,6 +3,7 @@ package praktikum;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static config.ConfigApp.ZERO_DELTA;
 import static org.junit.Assert.*;
 
 public class IngredientTest {
@@ -12,7 +13,7 @@ public class IngredientTest {
     @Test
     public void getPriceTest() {
         var actual = ingredient.getPrice();
-        Assert.assertEquals("Метод getPrice работает не корректно", 100F, actual, 0);
+        Assert.assertEquals("Метод getPrice работает не корректно", 100F, actual, ZERO_DELTA);
     }
 
     @Test

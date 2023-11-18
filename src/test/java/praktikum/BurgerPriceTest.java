@@ -7,6 +7,7 @@ import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import static config.ConfigApp.ZERO_DELTA;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -25,7 +26,7 @@ public class BurgerPriceTest {
     }
 
     @Parameterized.Parameters
-    public static Object[][] getQuest() {
+    public static Object[][] price() {
         return new Object[][]{
                 {50F, 10F},
                 {70F, 30F},
@@ -51,7 +52,7 @@ public class BurgerPriceTest {
             price += ingredient.getPrice();
         }
 
-        assertEquals(price, burger.getPrice(), 0);
+        assertEquals(price, burger.getPrice(), ZERO_DELTA);
     }
 
 }
